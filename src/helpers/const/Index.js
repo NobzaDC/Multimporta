@@ -52,7 +52,13 @@ export const PRODUCTO_PATH = {
 	fncEdit: (x) => `/Producto/Editar/${x}`,
 	any: "/Producto/*",
 };
-export const PROVEEDOR_PATH = "/Proveedor";
+export const PROVEEDOR_PATH = {
+	index: "/Proveedor",
+	create: "/Proveedor/Nuevo",
+	edit: "/Proveedor/Editar/:id",
+	fncEdit: (x) => `/Proveedor/Editar/${x}`,
+	any: "/Proveedor/*",
+};
 export const ErrorPage = { not_found: "/404" };
 export const HomePage = { index: "/" };
 

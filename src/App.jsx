@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import { SideBar } from "components/sideBar/Index";
 import styled from "styled-components";
-import { CIUDADES_PATH, CONDICION_PAGO_PATH, PRESENTACION_PRODUCTO_PATH, PUERTO_PATH, TIPO_PAGO_PATH, TERMINO_NEGOCIACION_PATH, PRODUCTO_PATH } from "helpers/const/Index";
+import { CIUDADES_PATH, CONDICION_PAGO_PATH, PRESENTACION_PRODUCTO_PATH, PUERTO_PATH, TIPO_PAGO_PATH, TERMINO_NEGOCIACION_PATH, PRODUCTO_PATH, PROVEEDOR_PATH } from "helpers/const/Index";
 import { getServerPath } from "helpers/getServerPath/GetServerPath";
 import { CiudadesRouter } from "components/Ciudades/Router";
 import { ToastContainer } from 'react-toastify';
@@ -14,6 +14,7 @@ import { PuertoRouter } from "components/Puerto/Router";
 import { TipoPagoRouter } from "components/TipoPago/Router";
 import { TerminoNegociacionRouter } from "components/TerminoNegociacion/Router";
 import { ProductoRouter } from "components/Producto/Router";
+import { ProveedorRouter } from "components/Proveedor/Router";
 
 const Content = styled.div`
 	width: 100%;
@@ -53,6 +54,7 @@ function App() {
 						<Route path={getServerPath(TIPO_PAGO_PATH.index)} component={() => <TipoPagoRouter />} />
 						<Route path={getServerPath(TERMINO_NEGOCIACION_PATH.index)} component={() => <TerminoNegociacionRouter />} />
 						<Route path={getServerPath(PRODUCTO_PATH.index)} component={() => <ProductoRouter />} />
+						<Route path={getServerPath(PROVEEDOR_PATH.index)} component={() => <ProveedorRouter />} />
 					</Switch>
 				</Content>
 			</Router>

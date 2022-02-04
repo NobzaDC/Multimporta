@@ -115,7 +115,7 @@ export const SideBarBody = ({ active }) => {
 				<OpLink active={active} path={getServerPath(CONDICION_PAGO_PATH.index)} name='Condición pago' icon='fa-comments-dollar'/>
 				<OpLink active={active} path={getServerPath(PRESENTACION_PRODUCTO_PATH.index)} name='Presentación del producto' icon='fa-eye'/>
 				<OpLink active={active} path={getServerPath(PRODUCTO_PATH.index)} name='Producto' icon='fa-box-open'/>
-				<OpLink active={active} path={getServerPath(PROVEEDOR_PATH)} name='Proveedor' icon='fa-people-carry'/>
+				<OpLink active={active} path={getServerPath(PROVEEDOR_PATH.index)} name='Proveedor' icon='fa-people-carry'/>
 				<OpLink active={active} path={getServerPath(TERMINO_NEGOCIACION_PATH.index)} name='Término de negociación' icon='fa-file-signature'/>
 				<OpLink active={active} path={getServerPath(PUERTO_PATH.index)} name='Puerto' icon='fa-plane-departure'/>
 				<OpLink active={active} path={getServerPath(TIPO_PAGO_PATH.index)} name='Tipo de pago' icon='fa-file-invoice-dollar'/>
