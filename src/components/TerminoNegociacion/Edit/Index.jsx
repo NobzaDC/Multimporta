@@ -35,8 +35,6 @@ export const TerminoNegociacionEdit = () => {
 	const { id } = useParams();
 	const history = useHistory();
 
-    console.log(formData)
-
 	React.useEffect(() => {
         TerminoNegociacionService.getByIdAsync(id).then((x) => {
 			setFormData((last) => ({

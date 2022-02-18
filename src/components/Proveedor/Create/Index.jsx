@@ -1,7 +1,7 @@
 import { Form } from "components/global/Form/Index";
 import { NavigationTitle } from "components/global/NavigationTitle/Index";
 import { Section } from "components/global/Section/Index";
-import { PROVEEDOR_PATH, ERROR_CASES, REQUIRED_ERROR } from "helpers/const/Index";
+import { PROVEEDOR_PATH, ERROR_CASES, REQUIRED_ERROR, TIPO_IDENTIFICACION } from "helpers/const/Index";
 import { handlerCreateToast, TOAST_TYPES } from "helpers/createToast/Index";
 import { getDigitoDian } from "helpers/getDigitoVerificacion/Index";
 import { getServerPath } from "helpers/getServerPath/GetServerPath";
@@ -34,15 +34,6 @@ const DEFAULT_FORM_DATA = {
 	ciudad_banco: "",
 	ban: "",
 };
-
-const TIPO_IDENTIFICACION = [
-	{id: 'CC', nombre: 'Cédula de ciudadanía'},
-	{id: 'TI', nombre: 'Tarjeta de identidad'},
-	{id: 'CE', nombre: 'Cédula de extranjería'},
-	{id: 'NP', nombre: 'Número de pasaporte'},
-	{id: 'PE', nombre: 'Permiso especial'},
-	{id: 'RC', nombre: 'Registro civil'},
-]
 
 export const ProveedorCreate = () => {
 	const [formData, setFormData] = React.useState(DEFAULT_FORM_DATA);

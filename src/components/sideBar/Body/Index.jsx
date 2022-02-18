@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "components/global/FontAwesomeIcon/Index";
 import * as Color from "helpers/colorPalette/Index";
-import { ACTIVE, CIUDADES_PATH, CONDICION_PAGO_PATH, PRESENTACION_PRODUCTO_PATH, PRODUCTO_PATH, PROVEEDOR_PATH, PUERTO_PATH, TERMINO_NEGOCIACION_PATH, TIPO_PAGO_PATH } from "helpers/const/Index";
+import { ACTIVE, CIUDADES_PATH, CONDICION_PAGO_PATH, PRESENTACION_PRODUCTO_PATH, PRODUCTO_PATH, PROVEEDOR_PATH, PUERTO_PATH, TERMINO_NEGOCIACION_PATH, TIPO_PAGO_PATH, USUARIO_PATH } from "helpers/const/Index";
 import { getServerPath } from "helpers/getServerPath/GetServerPath";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
@@ -119,6 +119,7 @@ export const SideBarBody = ({ active }) => {
 				<OpLink active={active} path={getServerPath(TERMINO_NEGOCIACION_PATH.index)} name='Término de negociación' icon='fa-file-signature'/>
 				<OpLink active={active} path={getServerPath(PUERTO_PATH.index)} name='Puerto' icon='fa-plane-departure'/>
 				<OpLink active={active} path={getServerPath(TIPO_PAGO_PATH.index)} name='Tipo de pago' icon='fa-file-invoice-dollar'/>
+				<OpLink active={active} path={getServerPath(USUARIO_PATH.index)} name='Usuario' icon='fa-user'/>
 			</BodyOptions>
 		</StyledSideBarBody>
 	);

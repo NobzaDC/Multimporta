@@ -37,8 +37,6 @@ const TIPO_ENTREGA = {
 export const TerminoNegociacionIndex = () => {
 	const [terminosNegociacion, setTerminosNegociacion] = React.useState([]);
 
-    console.log(terminosNegociacion)
-
 	React.useEffect(() => {
 		TerminoNegociacionService.getAllAsync().then(setTerminosNegociacion);
 	}, []);

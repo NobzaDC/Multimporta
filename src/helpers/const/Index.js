@@ -1,6 +1,7 @@
 import { DEVELOPER_MODE } from "helpers/getServerPath/GetServerPath";
 
 export const ACTIVE = "is_active";
+export const USER_LOCAL_STORAGE_STRING = "SESSION_USER"
 
 //PATHS
 export const CIUDADES_PATH = {
@@ -10,6 +11,10 @@ export const CIUDADES_PATH = {
 	fncEdit: (x) => `/Ciudad/Editar/${x}`,
 	any: "/Ciudad/*",
 };
+export const LOGIN_PATH = {
+	index: "/",
+};
+
 export const CONDICION_PAGO_PATH = {
 	index: "/CondicionPago",
 	create: "/CondicionPago/Nuevo",
@@ -59,8 +64,19 @@ export const PROVEEDOR_PATH = {
 	fncEdit: (x) => `/Proveedor/Editar/${x}`,
 	any: "/Proveedor/*",
 };
+export const USUARIO_PATH = {
+	index: "/Usuario",
+	create: "/Usuario/Nuevo",
+	edit: "/Usuario/Editar/:id",
+	fncEdit: (x) => `/Usuario/Editar/${x}`,
+	any: "/Usuario/*",
+};
+export const ORDEN_COMPRA_PATH = {
+	index: "/OrdenCompra",
+	any: "/OrdenCompra/*",
+};
 export const ErrorPage = { not_found: "/404" };
-export const HomePage = { index: "/" };
+export const HomePage = { index: "/Inicio" };
 
 //Config
 export const BASE_URL = DEVELOPER_MODE ? "https://localhost:44313" : "http://[PUBLIC_IP]/[SUB_DOMAIN]";
@@ -74,3 +90,13 @@ export const ERROR_CASES = {
 
 //Form errors
 export const REQUIRED_ERROR = "Este campo es requerido.";
+
+//Dropdowns
+export const TIPO_IDENTIFICACION = [
+	{id: 'CC', nombre: 'Cédula de ciudadanía'},
+	{id: 'TI', nombre: 'Tarjeta de identidad'},
+	{id: 'CE', nombre: 'Cédula de extranjería'},
+	{id: 'NP', nombre: 'Número de pasaporte'},
+	{id: 'PE', nombre: 'Permiso especial'},
+	{id: 'RC', nombre: 'Registro civil'},
+]
