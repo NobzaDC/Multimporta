@@ -35,7 +35,7 @@ export const LoginUser = (model) => {
 }
 
 export const getAll = () => {
-	const { token } = JSON.parse(window.localStorage.getItem(USER_LOCAL_STORAGE_STRING));
+	const { token, codigo } = JSON.parse(window.localStorage.getItem(USER_LOCAL_STORAGE_STRING));
 
 	const config = {
 		headers: {
@@ -47,7 +47,7 @@ export const getAll = () => {
 	return axios
 		.get(URL, config)
 		.then(({data}) => {
-			return data;
+			return data.filter(x => x.codigo !== codigo);
 		})
 };
 
@@ -70,9 +70,6 @@ export const getById = (id) => {
 };
 
 export const Edit = (json, code) => {
-	console.log(json)
-	console.log(code)
-	
 	const { token } = JSON.parse(window.localStorage.getItem(USER_LOCAL_STORAGE_STRING));
 
 	const config = {
@@ -85,6 +82,24 @@ export const Edit = (json, code) => {
 
 	return axios
 		.put(URL, json, config)
+		.then(({data}) => {
+			return data;
+		})
+}
+
+export const Toggle = (json) => {
+	const { token } = JSON.parse(window.localStorage.getItem(USER_LOCAL_STORAGE_STRING));
+
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	const URL = `${BASE_URL}/V1/Usuarios/ChangeState`;
+
+	return axios
+		.post(URL, json, config)
 		.then(({data}) => {
 			return data;
 		})

@@ -35,7 +35,13 @@ export const CrudListButtons = ({
 			{confirmationDelete ? (
 				<>
 					<span>Seguro? </span>
-					<button className="btn btn-success btn-sm" onClick={delete_button_function}>
+					<button
+						className="btn btn-success btn-sm"
+						onClick={() => {
+							delete_button_function();
+							toggleConfirmationDelete();
+						}}
+					>
 						<i className="fa fa-check" />
 					</button>
 					<button className="btn btn-danger btn-sm" onClick={toggleConfirmationDelete}>
