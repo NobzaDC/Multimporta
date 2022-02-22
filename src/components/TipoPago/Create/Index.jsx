@@ -56,7 +56,7 @@ export const TipoPagoCreate = () => {
 		};
 
 		toast
-			.promise(TipoPagoService.CreateAsync(json), {
+			.promise(TipoPagoService.Create(json), {
 				pending: "Creando el tipo de pago...",
 				success: "Tipo de pago creado con exito.",
 				error: {

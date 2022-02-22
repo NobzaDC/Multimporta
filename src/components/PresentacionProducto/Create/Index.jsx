@@ -48,7 +48,7 @@ export const PresentacionProductoCreate = () => {
 		};
 
 		toast
-			.promise(PresentacionProductoService.CreateAsync(json), {
+			.promise(PresentacionProductoService.Create(json), {
 				pending: "Creando la presentación de producto...",
 				success: "Presentación de producto creada con exito.",
 				error: {

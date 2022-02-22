@@ -76,7 +76,7 @@ export const TerminoNegociacionCreate = () => {
 		};
 
 		toast
-			.promise(TerminoNegociacionService.CreateAsync(json), {
+			.promise(TerminoNegociacionService.Create(json), {
 				pending: "Creando el termino de negociación...",
 				success: "Termino de negociación creado con exito.",
 				error: {

@@ -24,7 +24,7 @@ export const PresentacionProductoEdit = () => {
 	const history = useHistory();
 
 	React.useEffect(() => {
-		PresentacionProductoService.getByIdAsync(id).then(x => {
+		PresentacionProductoService.getById(id).then(x => {
 			setFormData(last => ({...last, id: x.id, nombre: x.nombre,  observaciones: x.observaciones}))
 			setOriginalCode(x.id)
 		})
@@ -58,7 +58,7 @@ export const PresentacionProductoEdit = () => {
 		};
 
 		toast.promise(
-			PresentacionProductoService.EditAsync(json, originalCode),
+			PresentacionProductoService.Edit(json, originalCode),
 			{
 				pending: 'Editando la presentación de producto...',
 				success: 'Presentación de producto editada con exito.',

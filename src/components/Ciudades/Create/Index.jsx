@@ -58,7 +58,7 @@ export const CiudadesCreate = () => {
 		};
 
 		toast
-			.promise(CiudadesService.CreateAsync(json), {
+			.promise(CiudadesService.Create(json), {
 				pending: "Creando la ciudad...",
 				success: "Ciudad creada con exito.",
 				error: {

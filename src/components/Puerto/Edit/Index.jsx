@@ -34,12 +34,12 @@ export const PuertosEdit = () => {
 	const history = useHistory();
 
 	React.useEffect(() => {
-		PuertoService.getByIdAsync(id).then(x => {
+		PuertoService.getById(id).then(x => {
 			setFormData(last => ({...last, codigo: x.codigo, nombre: x.nombre, tiempo: parseInt(x.tiempoTransitoDias), pais: x.codigoPais, ciudad: x.codigoCiudad, observaciones: x.observaciones}))
 			setOriginalCode(x.codigo)
 		})
-        CiudadesService.getAllAsync().then(setCiudades);
-		PaisesService.getAllAsync().then(setPaises);
+        CiudadesService.getAll().then(setCiudades);
+		PaisesService.getAll().then(setPaises);
 	}, [id])
     
 	const handlerFormSubmit = (e) => {
@@ -84,7 +84,7 @@ export const PuertosEdit = () => {
 		};
 
 		toast.promise(
-			PuertoService.EditAsync(json, originalCode),
+			PuertoService.Edit(json, originalCode),
 			{
 				pending: 'Editando el puerto...',
 				success: 'Puerto editado con exito.',

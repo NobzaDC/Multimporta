@@ -24,7 +24,7 @@ export const CiudadesEdit = () => {
 	const history = useHistory();
 
 	React.useEffect(() => {
-		CiudadesService.getByIdAsync(id).then(x => {
+		CiudadesService.getById(id).then(x => {
 			setFormData(last => ({...last, codigo: x.codigo, nombre: x.nombre, departamento: x.departamento, observaciones: x.observaciones}))
 			setOriginalCode(x.codigo)
 		})
@@ -65,7 +65,7 @@ export const CiudadesEdit = () => {
 		};
 
 		toast.promise(
-			CiudadesService.EditAsync(json, originalCode),
+			CiudadesService.Edit(json, originalCode),
 			{
 				pending: 'Editando la ciudad...',
 				success: 'Ciudad editada con exito.',

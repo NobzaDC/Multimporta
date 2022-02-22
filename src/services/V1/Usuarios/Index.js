@@ -34,7 +34,7 @@ export const LoginUser = (model) => {
 		})
 }
 
-export const getAllAsync = () => {
+export const getAll = () => {
 	const { token } = JSON.parse(window.localStorage.getItem(USER_LOCAL_STORAGE_STRING));
 
 	const config = {
@@ -50,3 +50,42 @@ export const getAllAsync = () => {
 			return data;
 		})
 };
+
+export const getById = (id) => {
+	const { token } = JSON.parse(window.localStorage.getItem(USER_LOCAL_STORAGE_STRING));
+
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	const URL = `${BASE_URL}/V1/Usuarios/GetById/${id}`;
+
+	return axios
+		.get(URL, config)
+		.then(({data}) => {
+			return data;
+		})
+};
+
+export const Edit = (json, code) => {
+	console.log(json)
+	console.log(code)
+	
+	const { token } = JSON.parse(window.localStorage.getItem(USER_LOCAL_STORAGE_STRING));
+
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	const URL = `${BASE_URL}/V1/Usuarios/Edit/${code}`;
+
+	return axios
+		.put(URL, json, config)
+		.then(({data}) => {
+			return data;
+		})
+}

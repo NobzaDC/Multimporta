@@ -36,7 +36,7 @@ export const TerminoNegociacionEdit = () => {
 	const history = useHistory();
 
 	React.useEffect(() => {
-        TerminoNegociacionService.getByIdAsync(id).then((x) => {
+        TerminoNegociacionService.getById(id).then((x) => {
 			setFormData((last) => ({
 				...last,
 				codigo: x.codigo,
@@ -94,7 +94,7 @@ export const TerminoNegociacionEdit = () => {
 		};
 
 		toast
-			.promise(TerminoNegociacionService.EditAsync(json, originalCode), {
+			.promise(TerminoNegociacionService.Edit(json, originalCode), {
 				pending: "Editando el termino de negociación...",
 				success: "Termino de negociación editado con exito.",
 				error: {

@@ -29,7 +29,7 @@ export const CondicionPagoEdit = () => {
 	const history = useHistory();
 
 	React.useEffect(() => {
-		CondicionPagoService.getByIdAsync(id).then(x => {
+		CondicionPagoService.getById(id).then(x => {
 			setFormData(last => ({...last, codigo: x.codigo, nombre: x.nombre, catidad_dias: x.cantidadDias, observaciones: x.observacion}))
 			setOriginalCode(x.codigo)
 		})
@@ -75,7 +75,7 @@ export const CondicionPagoEdit = () => {
 		};
 
 		toast.promise(
-			CondicionPagoService.EditAsync(json, originalCode),
+			CondicionPagoService.Edit(json, originalCode),
 			{
 				pending: 'Editando la condición de pago...',
 				success: 'Condición de pago editada con exito.',

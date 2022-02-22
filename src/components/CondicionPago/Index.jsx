@@ -32,12 +32,12 @@ export const CondicionPagoIndex = () => {
 	const [condicionesPago, setCondicionesPago] = React.useState([]);
 
 	React.useEffect(() => {
-		CondicionPagoService.getAllAsync().then(setCondicionesPago);
+		CondicionPagoService.getAll().then(setCondicionesPago);
 	}, []);
 
 	const handlerDeleteItem = (code) => {
 		toast.promise(
-			CondicionPagoService.DeleteAsync(code),
+			CondicionPagoService.Delete(code),
 			{
 				pending: 'Eliminando la condición de pago...',
 				success: 'Condición de pago eliminada con exito.',

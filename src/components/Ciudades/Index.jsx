@@ -32,12 +32,12 @@ export const CiudadesIndex = () => {
 	const [ciudades, setCiudades] = React.useState([]);
 
 	React.useEffect(() => {
-		CiudadesService.getAllAsync().then(setCiudades);
+		CiudadesService.getAll().then(setCiudades);
 	}, []);
 
 	const handlerDeleteItem = (code) => {
 		toast.promise(
-			CiudadesService.DeleteAsync(code),
+			CiudadesService.Delete(code),
 			{
 				pending: 'Eliminando la ciudad...',
 				success: 'Ciudad eliminada con exito.',

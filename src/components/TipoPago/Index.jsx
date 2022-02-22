@@ -32,12 +32,12 @@ export const TipoPagoIndex = () => {
 	const [tiposPago, setTiposPago] = React.useState([]);
 
 	React.useEffect(() => {
-		TipoPagoService.getAllAsync().then(setTiposPago);
+		TipoPagoService.getAll().then(setTiposPago);
 	}, []);
 
 	const handlerDeleteItem = (code) => {
 		toast.promise(
-			TipoPagoService.DeleteAsync(code),
+			TipoPagoService.Delete(code),
 			{
 				pending: 'Eliminando el tipo de pago...',
 				success: 'Tipo de pago eliminado con exito.',

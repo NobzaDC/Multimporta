@@ -1,5 +1,7 @@
 import * as Color from 'helpers/colorPalette/Index'
-import { ACTIVE } from 'helpers/const/Index';
+import { ACTIVE, USER_LOCAL_STORAGE_STRING, LOGIN_PATH } from 'helpers/const/Index';
+import { getServerPath } from 'helpers/getServerPath/GetServerPath';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledSideBarFotter = styled.div`
@@ -59,6 +61,13 @@ const UserInfo = styled.label`
 `;
 
 export const SideBarFotter = ({active}) => {
+
+	const history = useHistory()
+
+	const handlerCloseSesion = () => {
+		window.localStorage.removeItem(USER_LOCAL_STORAGE_STRING);
+		history.push(getServerPath(LOGIN_PATH.index))
+	}
 	return (
 		<StyledSideBarFotter isactive={active}>
 			<img
@@ -68,7 +77,7 @@ export const SideBarFotter = ({active}) => {
 			<div>
 				<UserInfo>Usuario</UserInfo>
 				<UserInfo>Empresa</UserInfo>
-				<LogOutButton>Cerrar sessión.</LogOutButton>
+				<LogOutButton onClick={handlerCloseSesion}>Cerrar sesión.</LogOutButton>
 			</div>
 		</StyledSideBarFotter>
 	);

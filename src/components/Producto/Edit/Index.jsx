@@ -32,11 +32,11 @@ export const ProductoEdit = () => {
 	const history = useHistory();
 
 	React.useEffect(() => {
-		ProductoService.getByIdAsync(id).then((x) => {
+		ProductoService.getById(id).then((x) => {
 			setFormData((last) => ({ ...last, id: x.id, nombre: x.nombre, cantidad: x.cantidad , precio: x.precio , presentacion: x.presentacion , observacion: x.observacion }));
 			setOriginalCode(x.id);
 		});
-		PresentacionProductoService.getAllAsync().then(setPresentacionesProducto)
+		PresentacionProductoService.getAll().then(setPresentacionesProducto)
 	}, [id]);
 
 	const handlerFormSubmit = (e) => {
@@ -85,7 +85,7 @@ export const ProductoEdit = () => {
 		};
 
 		toast
-			.promise(ProductoService.EditAsync(json, originalCode), {
+			.promise(ProductoService.Edit(json, originalCode), {
 				pending: "Editando el producto...",
 				success: "producto editado con exito.",
 				error: {

@@ -44,9 +44,9 @@ export const ProveedorCreate = () => {
 	const history = useHistory();
 
 	React.useEffect(() => {
-		CiudadService.getAllAsync().then(setCiudades)
-		PaisService.getAllAsync().then(setPaises)
-		PuertoService.getAllAsync().then(setPuertos)
+		CiudadService.getAll().then(setCiudades)
+		PaisService.getAll().then(setPaises)
+		PuertoService.getAll().then(setPuertos)
 	}, [])
 
 	const handlerFormSubmit = (e) => {
@@ -116,7 +116,7 @@ export const ProveedorCreate = () => {
 		};
 
 		toast
-			.promise(ProveedorService.CreateAsync(json), {
+			.promise(ProveedorService.Create(json), {
 				pending: "Creando el proveedor...",
 				success: "Proveedor creado con exito.",
 				error: {

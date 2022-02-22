@@ -38,12 +38,12 @@ export const TerminoNegociacionIndex = () => {
 	const [terminosNegociacion, setTerminosNegociacion] = React.useState([]);
 
 	React.useEffect(() => {
-		TerminoNegociacionService.getAllAsync().then(setTerminosNegociacion);
+		TerminoNegociacionService.getAll().then(setTerminosNegociacion);
 	}, []);
 
 	const handlerDeleteItem = (code) => {
 		toast.promise(
-			TerminoNegociacionService.DeleteAsync(code),
+			TerminoNegociacionService.Delete(code),
 			{
 				pending: 'Eliminando el termino de negociación...',
 				success: 'Termino de negociación eliminado con exito.',

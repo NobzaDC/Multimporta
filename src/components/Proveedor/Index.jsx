@@ -32,12 +32,12 @@ export const ProveedorIndex = () => {
 	const [proveedores, setProveedores] = React.useState([]);
 
 	React.useEffect(() => {
-		ProveedorService.getAllAsync().then(setProveedores);
+		ProveedorService.getAll().then(setProveedores);
 	}, []);
 
 	const handlerDeleteItem = (code) => {
 		toast.promise(
-			ProveedorService.DeleteAsync(code),
+			ProveedorService.Delete(code),
 			{
 				pending: 'Eliminando el proveedor...',
 				success: 'Proveedor eliminado con exito.',

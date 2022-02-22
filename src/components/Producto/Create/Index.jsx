@@ -28,7 +28,7 @@ export const ProductoCreate = () => {
 	const [presentacionesProducto, setPresentacionesProducto] = React.useState([])
 	
 	React.useState(() => {
-		PresentacionProductoService.getAllAsync().then(setPresentacionesProducto)
+		PresentacionProductoService.getAll().then(setPresentacionesProducto)
 	})
 
 	const history = useHistory();
@@ -79,7 +79,7 @@ export const ProductoCreate = () => {
 		};
 
 		toast
-			.promise(ProductoService.CreateAsync(json), {
+			.promise(ProductoService.Create(json), {
 				pending: "Creando el producto...",
 				success: "Producto creado con exito.",
 				error: {

@@ -32,12 +32,12 @@ export const PuertosIndex = () => {
 	const [puertos, setPuertos] = React.useState([]);
 
 	React.useEffect(() => {
-		PuertosService.getAllAsync().then(setPuertos);
+		PuertosService.getAll().then(setPuertos);
 	}, []);
 
 	const handlerDeleteItem = (code) => {
 		toast.promise(
-			PuertosService.DeleteAsync(code),
+			PuertosService.Delete(code),
 			{
 				pending: 'Eliminando el puerto...',
 				success: 'Puerto eliminado con exito.',

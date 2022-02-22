@@ -65,7 +65,7 @@ export const CondicionPagoCreate = () => {
 		};
 
 		toast
-			.promise(CondicionPagoService.CreateAsync(json), {
+			.promise(CondicionPagoService.Create(json), {
 				pending: "Creando la condición de pago...",
 				success: "Condición de pago creada con exito.",
 				error: {

@@ -26,7 +26,7 @@ export const TipoPagoEdit = () => {
 	const history = useHistory();
 
 	React.useEffect(() => {
-		TipoPagoService.getByIdAsync(id).then((x) => {
+		TipoPagoService.getById(id).then((x) => {
 			setFormData((last) => ({ ...last, codigo: x.codigo, nombre: x.nombre, observaciones: x.observaciones }));
 			setOriginalCode(x.codigo);
 		});
@@ -66,7 +66,7 @@ export const TipoPagoEdit = () => {
 		};
 
 		toast
-			.promise(TipoPagoService.EditAsync(json, originalCode), {
+			.promise(TipoPagoService.Edit(json, originalCode), {
 				pending: "Editando el tipo de pago...",
 				success: "Tipo de pago editado con exito.",
 				error: {

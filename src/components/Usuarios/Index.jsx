@@ -31,10 +31,8 @@ export const UsuarioIndex = () => {
 	const [usuarios, setUsuarios] = React.useState([])
 
 	React.useEffect(() => {
-		UsuarioService.getAllAsync().then(setUsuarios)
+		UsuarioService.getAll().then(setUsuarios)
 	}, [])
-
-	console.log(usuarios)
 
 	return (
 		<>

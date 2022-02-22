@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL, USER_LOCAL_STORAGE_STRING } from "helpers/const/Index";
 
-export const getAllAsync = () => {
+export const getAll = () => {
 	const { token } = JSON.parse(window.localStorage.getItem(USER_LOCAL_STORAGE_STRING));
 	const empresa = "mEmpresa"
 
@@ -20,7 +20,7 @@ export const getAllAsync = () => {
 		})
 };
 
-export const getByIdAsync = (id) => {
+export const getById = (id) => {
 	const { token } = JSON.parse(window.localStorage.getItem(USER_LOCAL_STORAGE_STRING));
 	const empresa = "mEmpresa"
 
@@ -39,7 +39,7 @@ export const getByIdAsync = (id) => {
 		})
 }
 
-export const CreateAsync = (json) => {
+export const Create = (json) => {
 	const { token } = JSON.parse(window.localStorage.getItem(USER_LOCAL_STORAGE_STRING));
 	const empresa = "mEmpresa"
 
@@ -58,7 +58,7 @@ export const CreateAsync = (json) => {
 		})
 }
 
-export const EditAsync = (json, code) => {
+export const Edit = (json, code) => {
 	const { token } = JSON.parse(window.localStorage.getItem(USER_LOCAL_STORAGE_STRING));
 	const empresa = "mEmpresa"
 
@@ -77,7 +77,7 @@ export const EditAsync = (json, code) => {
 		})
 }
 
-export const DeleteAsync = (code) => {
+export const Delete = (code) => {
 	const { token } = JSON.parse(window.localStorage.getItem(USER_LOCAL_STORAGE_STRING));
 	const empresa = "mEmpresa"
 

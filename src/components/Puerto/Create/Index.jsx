@@ -30,8 +30,8 @@ export const PuertosCreate = () => {
 	const [paises, setPaises] = React.useState([]);
 
 	React.useEffect(() => {
-		CiudadesService.getAllAsync().then(setCiudades);
-		PaisesService.getAllAsync().then(setPaises);
+		CiudadesService.getAll().then(setCiudades);
+		PaisesService.getAll().then(setPaises);
 	}, []);
 
 	const history = useHistory();
@@ -78,7 +78,7 @@ export const PuertosCreate = () => {
 		};
 
 		toast
-			.promise(PuertosService.CreateAsync(json), {
+			.promise(PuertosService.Create(json), {
 				pending: "Creando el puerto...",
 				success: "Puerto creado con exito.",
 				error: {

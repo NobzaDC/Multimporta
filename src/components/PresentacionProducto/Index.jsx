@@ -32,12 +32,12 @@ export const PresentacionProductoIndex = () => {
 	const [presentacionProducto, setPresentacionProducto] = React.useState([]);
 
 	React.useEffect(() => {
-		PresentacionProductoService.getAllAsync().then(setPresentacionProducto);
+		PresentacionProductoService.getAll().then(setPresentacionProducto);
 	}, []);
 
 	const handlerDeleteItem = (code) => {
 		toast.promise(
-			PresentacionProductoService.DeleteAsync(code),
+			PresentacionProductoService.Delete(code),
 			{
 				pending: 'Eliminando la presentación de producto...',
 				success: 'Presentación de producto eliminada con exito.',

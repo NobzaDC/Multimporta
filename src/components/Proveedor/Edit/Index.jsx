@@ -55,7 +55,7 @@ export const ProveedorEdit = () => {
 	const history = useHistory();
 
 	React.useEffect(() => {
-		ProveedorService.getByIdAsync(id).then((x) => {
+		ProveedorService.getById(id).then((x) => {
 			setFormData((last) => ({
 				...last,
 				id: x.id,
@@ -77,9 +77,9 @@ export const ProveedorEdit = () => {
 			}));
 			setOriginalCode(x.id);
 		});
-		CiudadService.getAllAsync().then(setCiudades);
-		PaisService.getAllAsync().then(setPaises);
-		PuertoService.getAllAsync().then(setPuertos);
+		CiudadService.getAll().then(setCiudades);
+		PaisService.getAll().then(setPaises);
+		PuertoService.getAll().then(setPuertos);
 	}, [id]);
 
 	const handlerFormSubmit = (e) => {
@@ -149,7 +149,7 @@ export const ProveedorEdit = () => {
 		};
 
 		toast
-			.promise(ProveedorService.EditAsync(json, originalCode), {
+			.promise(ProveedorService.Edit(json, originalCode), {
 				pending: "Editando el proveedor...",
 				success: "Proveedor editado con exito.",
 				error: {
