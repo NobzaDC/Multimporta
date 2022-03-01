@@ -23,6 +23,10 @@ form label{
 	font-weight: bold;
 }
 
+input, select {
+	text-align: center;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

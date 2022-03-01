@@ -1,8 +1,10 @@
-import * as Color from 'helpers/colorPalette/Index'
-import { ACTIVE, USER_LOCAL_STORAGE_STRING, LOGIN_PATH } from 'helpers/const/Index';
-import { getServerPath } from 'helpers/getServerPath/GetServerPath';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
+import * as Color from "helpers/colorPalette/Index";
+import { ACTIVE, USER_LOCAL_STORAGE_STRING, LOGIN_PATH } from "helpers/const/Index";
+import { getServerPath } from "helpers/getServerPath/GetServerPath";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import styled from "styled-components";
+import * as UserService from "services/V1/Usuarios/Index";
 
 const StyledSideBarFotter = styled.div`
 	width: 100%;
@@ -60,14 +62,25 @@ const UserInfo = styled.label`
 	text-align: center;
 `;
 
-export const SideBarFotter = ({active}) => {
+export const SideBarFotter = ({ active }) => {
+	const [user, setUser] = useState({});
+	const { codigo } = JSON.parse(window.localStorage.getItem(USER_LOCAL_STORAGE_STRING));
 
-	const history = useHistory()
+	const history = useHistory();
+
+	useEffect(() => {
+		UserService.getById(codigo)
+			.then(setUser)
+			.catch((ex) => {
+				window.localStorage.removeItem(USER_LOCAL_STORAGE_STRING);
+				history.push(getServerPath(LOGIN_PATH.index));
+			});
+	}, [codigo, setUser, history]);
 
 	const handlerCloseSesion = () => {
 		window.localStorage.removeItem(USER_LOCAL_STORAGE_STRING);
-		history.push(getServerPath(LOGIN_PATH.index))
-	}
+		history.push(getServerPath(LOGIN_PATH.index));
+	};
 	return (
 		<StyledSideBarFotter isactive={active}>
 			<img
@@ -75,7 +88,7 @@ export const SideBarFotter = ({active}) => {
 				alt="Not find"
 			/>
 			<div>
-				<UserInfo>Usuario</UserInfo>
+				<UserInfo>{user.nombre} {user.apellido}</UserInfo>
 				<UserInfo>Empresa</UserInfo>
 				<LogOutButton onClick={handlerCloseSesion}>Cerrar sesión.</LogOutButton>
 			</div>

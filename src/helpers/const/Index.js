@@ -73,6 +73,8 @@ export const USUARIO_PATH = {
 };
 export const ORDEN_COMPRA_PATH = {
 	index: "/OrdenCompra",
+	create: "/OrdenCompra/Nuevo",
+	fncUpdate: (x) => `/OrdenCompra/Nuevo?origin=${x}`,
 	any: "/OrdenCompra/*",
 };
 export const ErrorPage = { not_found: "/404" };
@@ -99,4 +101,9 @@ export const TIPO_IDENTIFICACION = [
 	{id: 'NP', nombre: 'Número de pasaporte'},
 	{id: 'PE', nombre: 'Permiso especial'},
 	{id: 'RC', nombre: 'Registro civil'},
+]
+
+export const CANTIDAD_CONTENEDORES = [
+	{id: 'A', nombre: '40 Contenedores'},
+	{id: 'B', nombre: '20 Contenedores'}
 ]

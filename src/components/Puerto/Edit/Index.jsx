@@ -77,8 +77,8 @@ export const PuertosEdit = () => {
 		const json = {
 			Codigo: code.value,
 			Nombre: name.value,
-			CodigoCiudad: city.value,
-			CodigoPais: country.value,
+			CodigoCiudad: city.value || null,
+			CodigoPais: country.value || null,
 			TiempoTransitoDias: days.value,
 			Observaciones: details.value,
 		};
@@ -165,7 +165,7 @@ export const PuertosEdit = () => {
 							value={formData.pais}
 							onChange={(e) => setFormData((last) => ({ ...last, pais: e.target.value }))}
 						>
-							<option value="">{paises.length >= 1 ? "Seleccione" : "Cargando..."}</option>
+							<option  value="">{paises.length >= 1 ? "Seleccione" : "Cargando..."}</option>
 							{paises.map((x) => (
 								<option value={x.codigo} key={x.codigo}>
 									{x.nombre}
@@ -182,7 +182,7 @@ export const PuertosEdit = () => {
 							value={formData.ciudad}
 							onChange={(e) => setFormData((last) => ({ ...last, ciudad: e.target.value }))}
 						>
-							<option value="">{ciudades.length >= 1 ? "Seleccione" : "Cargando..."}</option>
+							<option  value="">{ciudades.length >= 1 ? "Seleccione" : "Cargando..."}</option>
 							{ciudades.map((x) => (
 								<option value={x.codigo} key={x.codigo}>
 									{x.nombre}

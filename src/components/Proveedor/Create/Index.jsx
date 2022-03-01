@@ -106,12 +106,12 @@ export const ProveedorCreate = () => {
 			Telefono: phone.value,
 			Email: mail.value,
 			Celular: cellphone.value,
-			PuertoPrincipal: port.value,
+			PuertoPrincipal: port.value || null,
 			NumeroCuenta: account.value,
 			CodigoSwift: swift.value,
 			DireccionBanco: bankDirection.value,
-			CiudadBanco: bankCity.value,
-			PaisBanco: bankCountry.value,
+			CiudadBanco: bankCity.value || null,
+			PaisBanco: bankCountry.value || null,
 			Ban: ban.value,
 		};
 
@@ -188,7 +188,7 @@ export const ProveedorCreate = () => {
 							value={formData.tipo_persona}
 							onChange={(e) => setFormData((last) => ({ ...last, tipo_persona: e.target.value }))}
 						>
-							<option value="">Seleccione</option>
+							<option  value="">Seleccione</option>
 							{TIPO_IDENTIFICACION.map((x) => (
 								<option value={x.id} key={x.id}>
 									{x.nombre}
@@ -365,7 +365,7 @@ export const ProveedorCreate = () => {
 							value={formData.pais_banco}
 							onChange={(e) => setFormData((last) => ({ ...last, pais_banco: e.target.value }))}
 						>
-							<option value="">Seleccione</option>
+							<option  value="">Seleccione</option>
 							{paises.map((x) => (
 								<option value={x.codigo} key={x.codigo}>
 									{x.nombre}

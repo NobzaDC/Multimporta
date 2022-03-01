@@ -98,7 +98,7 @@ export const UsuarioCreate = () => {
 		const json = {
 			Nombre: name.value,
 			Apellido: last_name.value,
-			TipoIdentidicacion: identification_type.value,
+			TipoIdentidicacion: identification_type.value || null,
 			Documento: document.value,
 			Correo: email.value,
 			Telefono: phone.value,
@@ -176,7 +176,7 @@ export const UsuarioCreate = () => {
 							value={formData.tipo_identificacion}
 							onChange={(e) => setFormData((last) => ({ ...last, tipo_identificacion: e.target.value }))}
 						>
-							<option value="">Seleccione</option>
+							<option  value="">Seleccione</option>
 							{TIPO_IDENTIFICACION.map((x) => (
 								<option value={x.id} key={x.id}>
 									{x.nombre}

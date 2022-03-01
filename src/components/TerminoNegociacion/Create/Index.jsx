@@ -145,7 +145,7 @@ export const TerminoNegociacionCreate = () => {
 							value={formData.tipo_entrega}
 							onChange={(e) => setFormData((last) => ({ ...last, tipo_entrega: e.target.value }))}
 						>
-							<option value="">Seleccione</option>
+							<option  value="">Seleccione</option>
 							{TIPO_ENTREGA.map((x) => (
 								<option value={x.id} key={x.id}>
 									{x.name}
