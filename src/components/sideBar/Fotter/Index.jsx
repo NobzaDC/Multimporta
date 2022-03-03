@@ -89,7 +89,7 @@ export const SideBarFotter = ({ active }) => {
 			/>
 			<div>
 				<UserInfo>{user.nombre} {user.apellido}</UserInfo>
-				<UserInfo>Empresa</UserInfo>
+				<UserInfo>MULTIMPORTA</UserInfo>
 				<LogOutButton onClick={handlerCloseSesion}>Cerrar sesión.</LogOutButton>
 			</div>
 		</StyledSideBarFotter>

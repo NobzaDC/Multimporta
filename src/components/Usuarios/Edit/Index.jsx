@@ -1,7 +1,7 @@
 import { Form } from "components/global/Form/Index";
 import { NavigationTitle } from "components/global/NavigationTitle/Index";
 import { Section } from "components/global/Section/Index";
-import { USUARIO_PATH, ERROR_CASES, REQUIRED_ERROR, TIPO_IDENTIFICACION } from "helpers/const/Index";
+import { USUARIO_PATH, ERROR_CASES, REQUIRED_ERROR, TIPO_IDENTIFICACION, NIVEL_ACCESO } from "helpers/const/Index";
 import { handlerCreateToast, TOAST_TYPES } from "helpers/createToast/Index";
 import { getServerPath } from "helpers/getServerPath/GetServerPath";
 import { handlerInputNumberKeyPress } from "helpers/InputNumberKeyPress/Index";
@@ -36,6 +36,7 @@ export const UsuarioEdit = () => {
 			correo: data.correo,
 			telefono: data.telefono,
 			celular: data.celular,
+			nivel_acceso: data.nivelAcceso,
 			observaciones: data.observaciones }
 			setFormData(json)
 		});
@@ -62,6 +63,7 @@ export const UsuarioEdit = () => {
 			phone,
 			cellphone,
 			details,
+			access_level
 		} = target;
 
 		let validationFlag = true;
@@ -75,6 +77,11 @@ export const UsuarioEdit = () => {
 		if (!email.value) {
 			validationFlag = false;
 			validationJson = { ...validationJson, correo_error: REQUIRED_ERROR };
+		}
+		
+		if (!access_level.value) {
+			validationFlag = false;
+			validationJson = { ...validationJson, nivel_acceso_error: REQUIRED_ERROR };
 		}
 
 		if (!validationFlag) {
@@ -91,6 +98,7 @@ export const UsuarioEdit = () => {
 			Correo: email.value,
 			Telefono: phone.value,
 			Celular: cellphone.value,
+			NivelAcceso: access_level.value,
 			Observaciones: details.value,
 		};
 
@@ -173,7 +181,7 @@ export const UsuarioEdit = () => {
 					</div>
 				</div>
 				<div className="row mt-4">
-					<div className="col-md-6">
+					<div className="col-md-4">
 						<label htmlFor="document" className="form-label">
 							Documento
 						</label>
@@ -190,7 +198,7 @@ export const UsuarioEdit = () => {
 							onChange={(e) => setFormData((last) => ({ ...last, documento: e.target.value }))}
 						/>
 					</div>
-					<div className="col-md-6">
+					<div className="col-md-4">
 						<label htmlFor="email" className="form-label">
 							Correo
 						</label>
@@ -206,6 +214,26 @@ export const UsuarioEdit = () => {
 							onChange={(e) => setFormData((last) => ({ ...last, correo: e.target.value }))}
 						/>
 						<span className="text-danger">{formData.correo_error}</span>
+					</div>
+					<div className="col-md-4">
+						<label htmlFor="access_level" className="form-label">
+							Nivel de acceso
+						</label>
+						<select
+							id="access_level"
+							name="access_level"
+							className="form-select"
+							value={formData.nivel_acceso}
+							onChange={(e) => setFormData((last) => ({ ...last, nivel_acceso: e.target.value }))}
+						>
+							<option value="">Seleccione</option>
+							{NIVEL_ACCESO.map((x) => (
+								<option value={x.id} key={x.id}>
+									{x.nombre}
+								</option>
+							))}
+						</select>
+						<span className="text-danger">{formData.nivel_acceso_error}</span>
 					</div>
 				</div>
 				<div className="row mt-4">

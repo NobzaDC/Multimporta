@@ -104,6 +104,11 @@ export const TIPO_IDENTIFICACION = [
 ]
 
 export const CANTIDAD_CONTENEDORES = [
-	{id: 'A', nombre: '40 Contenedores'},
-	{id: 'B', nombre: '20 Contenedores'}
+	{id: 'A', nombre: '40'},
+	{id: 'B', nombre: '20'}
+]
+
+export const NIVEL_ACCESO = [
+	{id: 'SA', nombre: 'Super administrador'},
+	{id: 'OP', nombre: 'Operador'}
 ]

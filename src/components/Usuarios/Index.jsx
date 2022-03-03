@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "components/global/FontAwesomeIcon/Index";
 import { NavigationTitle } from "components/global/NavigationTitle/Index";
 import { Section } from "components/global/Section/Index";
-import { ERROR_CASES, HomePage, USUARIO_PATH } from "helpers/const/Index";
+import { ERROR_CASES, HomePage, USUARIO_PATH, NIVEL_ACCESO } from "helpers/const/Index";
 import { getServerPath } from "helpers/getServerPath/GetServerPath";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -40,7 +40,7 @@ export const UsuarioIndex = () => {
 
 		const json = {
 			Codigo: codigo,
-			Estado: estado === 'A' ? 'I' : 'A',
+			Estado: estado === "A" ? "I" : "A",
 		};
 
 		toast
@@ -57,6 +57,7 @@ export const UsuarioIndex = () => {
 				UsuarioService.getAll().then(setUsuarios);
 			});
 	};
+
 
 	return (
 		<>
@@ -80,6 +81,7 @@ export const UsuarioIndex = () => {
 										<tr>
 											<th>Nombre completo</th>
 											<th>Identificación</th>
+											<th>Nivel</th>
 											<th>Correo</th>
 											<th>Celular</th>
 											<th>Opciones</th>
@@ -91,6 +93,7 @@ export const UsuarioIndex = () => {
 												<tr key={x.codigo}>
 													<td>{`${x.nombre} ${x.apellido}`}</td>
 													<td>{x.documento || "No se registro una identificación."}</td>
+													<td>{NIVEL_ACCESO.filter(y => y.id === x.nivelAcceso)[0]?.nombre}</td>
 													<td>{x.correo}</td>
 													<td>{x.celular}</td>
 													<td>

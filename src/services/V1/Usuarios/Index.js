@@ -14,8 +14,11 @@ export const RegisterUser = (model) => {
 		user: model,
 		enterprises: []
 	}
-	const URL = `${BASE_URL}/V1/Usuarios/Register`;
 
+	console.log(mModel)
+
+	const URL = `${BASE_URL}/V1/Usuarios/Register`;
+	
 	return axios
 		.post(URL, mModel, config)
 		.then(({data}) => {
