@@ -1,5 +1,8 @@
 .active {
-	background: white !important;
+	color: #4e2579 !important;
+}
+
+.active i {
 	color: #4e2579 !important;
 }
 
