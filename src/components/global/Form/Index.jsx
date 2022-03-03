@@ -15,7 +15,7 @@ export const Form = ({ handlerSubmit, submitButtonClass, submitButtonName, child
 	return (
 		<StyledForm onSubmit={handlerSubmit} autoComplete="off">
 			{children}
-			<div className="modal-footer  ps-5 pe-5 mt-3">
+			<div className="modal-footer mt-3">
 				<button type="submit" className={`btn ${submitButtonClass}`}>
 					{submitButtonName}
 				</button>

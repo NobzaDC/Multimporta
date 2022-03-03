@@ -21,6 +21,8 @@ import styled from "styled-components";
 import { handlerSetMoneyFormat } from "helpers/moneyFormat/Index";
 import { FontAwesomeIcon } from "components/global/FontAwesomeIcon/Index";
 import { useLocation } from "react-router-dom";
+import { PrintablePurchaseOrder } from "components/global/PrintablePurchaseOrder/Index";
+import { Modal } from "components/global/Modal/Index";
 
 const DEFAULT_FORM_DATA = {
 	codigo: "",
@@ -42,7 +44,7 @@ const DEFAULT_FORM_DATA = {
 	proveedor: "",
 	factura_proforma: "",
 	puerto_origen: "",
-	puero_destino: "",
+	puerto_destino: "",
 	tiempo_produccion: "",
 	trm_proyectada: "",
 	condicion_pago: "",
@@ -122,9 +124,9 @@ const ProductsFormSection = styled.div`
 `;
 
 const OrderDetailItem = ({ data, products, handlerEditProduct, handlerDeleteProduct }) => {
-	const { CodigoProducto, PrecioUnidad, Cantidad, NumeroLote, UniqueId } = data;
+	const { CodigoProducto, PrecioUnidad, Cantidad, UniqueId } = data;
 
-	const product = products.filter((x) => x.id === parseInt(CodigoProducto))[0];
+	const product = products.filter((x) => x.codigo === CodigoProducto)[0];
 
 	return (
 		<StyledOrderDetailItem className="mt-4">
@@ -132,9 +134,11 @@ const OrderDetailItem = ({ data, products, handlerEditProduct, handlerDeleteProd
 				<div className="col-md-3">
 					<b>{product?.nombre || ""}</b>
 				</div>
-				<div className="col-md-2">Precio und: {handlerSetMoneyFormat(PrecioUnidad)}</div>
 				<div className="col-md-2">Cantidad: {Cantidad}</div>
-				<div className="col-md-2">Lote: #{NumeroLote}</div>
+				<div className="col-md-2">V/R UNIDAD: {handlerSetMoneyFormat(PrecioUnidad)}</div>
+				<div className="col-md-2">
+					V/R TOTAL: {handlerSetMoneyFormat(parseInt(PrecioUnidad) * parseInt(Cantidad))}
+				</div>
 				<div className="col-md-3">
 					<button className="btn btn-sm btn-primary" onClick={() => handlerEditProduct(data)}>
 						<FontAwesomeIcon className="fa-pencil" color={Color.WHITE} /> Editar
@@ -150,6 +154,7 @@ const OrderDetailItem = ({ data, products, handlerEditProduct, handlerDeleteProd
 };
 
 export const OrdenCompraCreate = () => {
+	const [detailModal, setDetailModal] = React.useState(false);
 	const [sectionState, setSectionState] = React.useState(true);
 	const [ordenDetail, setOrdenDetail] = React.useState([]);
 
@@ -183,6 +188,10 @@ export const OrdenCompraCreate = () => {
 		setSectionState((last) => !last);
 	};
 
+	const handlerChangeDetailModal = () => {
+		setDetailModal((last) => !last);
+	};
+
 	React.useEffect(() => {
 		ProveedorService.getAll().then(setProveedores);
 		TerminoNegociacionService.getAll().then(setTerminoNegociacion);
@@ -214,7 +223,7 @@ export const OrdenCompraCreate = () => {
 					proveedor: proveedor,
 					factura_proforma: facturaProforma,
 					puerto_origen: codigoPuertoOrigen,
-					puero_destino: codigoPuertoDestino,
+					puerto_destino: codigoPuertoDestino,
 					tiempo_produccion: tiempoProduccion,
 					trm_proyectada: trmProyectada,
 					condicion_pago: codigoCondicionPago,
@@ -256,6 +265,7 @@ export const OrdenCompraCreate = () => {
 			trm,
 			paymentCondition,
 			paymentType,
+			details,
 		} = target;
 
 		let validationFlag = true;
@@ -324,6 +334,7 @@ export const OrdenCompraCreate = () => {
 			TrmProyectada: trm.value,
 			CodigoCondicionPago: paymentCondition.value || null,
 			CodigoTipoPago: paymentType.value || null,
+			Observaciones: details.value,
 			FacordenDetalle: ordenDetail,
 		};
 
@@ -425,9 +436,13 @@ export const OrdenCompraCreate = () => {
 			<NavigationTitle
 				name={`${origin ? "Actulización" : "Nueva"} orden de compra ${origin ? `/ ${origin}` : ""}`}
 				path={getServerPath(ORDEN_COMPRA_PATH.index)}
-				width_title="100%"
-				width_children="0%"
-			/>
+				width_title='90%'
+				width_children='10%'
+			>
+				<button className="btn btn-primary" onClick={handlerChangeDetailModal}>
+					<FontAwesomeIcon className="fa-eye" color={Color.WHITE} />
+				</button>
+			</NavigationTitle>
 			<FormHeaderSection>
 				<Li onClick={handlerChangeSectionState} isActive={sectionState}>
 					Detalles
@@ -437,7 +452,12 @@ export const OrdenCompraCreate = () => {
 				</Li>
 			</FormHeaderSection>
 			<FormSection isActive={sectionState}>
-				<Form submitButtonClass="btn-success" submitButtonName="Guardar" handlerSubmit={handlerFormSubmit}>
+				<Form
+					id="principal_form"
+					submitButtonClass="btn-success"
+					submitButtonName="Crear orden"
+					handlerSubmit={handlerFormSubmit}
+				>
 					<div className="row mt-4">
 						<div className="col-md-4">
 							<label htmlFor="importationNumber" className="form-label">
@@ -549,8 +569,8 @@ export const OrdenCompraCreate = () => {
 								id="destination"
 								name="destination"
 								className="form-select"
-								value={formData.puero_destino}
-								onChange={(e) => setFormData((last) => ({ ...last, puero_destino: e.target.value }))}
+								value={formData.puerto_destino}
+								onChange={(e) => setFormData((last) => ({ ...last, puerto_destino: e.target.value }))}
 							>
 								<option value="">Seleccione</option>
 								{lstPuertos.map((x) => (
@@ -639,6 +659,23 @@ export const OrdenCompraCreate = () => {
 							<span className="text-danger">{formData.tipo_pago_error}</span>
 						</div>
 					</div>
+					<div className="row mt-4">
+						<div className="col-md-12">
+							<label htmlFor="details" className="form-label">
+								Observaciones
+							</label>
+							<textarea
+								className="form-control"
+								id="details"
+								name="details"
+								rows="3"
+								autoComplete="off"
+								placeholder="Observaciones"
+								value={formData.observaciones}
+								onChange={(e) => setFormData((last) => ({ ...last, observaciones: e.target.value }))}
+							/>
+						</div>
+					</div>
 				</Form>
 			</FormSection>
 			<FormSection isActive={!sectionState}>
@@ -652,7 +689,7 @@ export const OrdenCompraCreate = () => {
 								<select id="product" name="product" className="form-select" ref={productRef}>
 									<option value="">Seleccione</option>
 									{lstProductos.map((x) => (
-										<option value={x.id} key={x.id}>
+										<option value={x.codigo} key={x.codigo}>
 											{x.nombre}
 										</option>
 									))}
@@ -670,9 +707,10 @@ export const OrdenCompraCreate = () => {
 									className="form-control"
 									placeholder="Lote"
 									ref={loteRef}
+									onKeyPress={handlerInputNumberKeyPress}
 									value={1}
 									disabled
-									onKeyPress={handlerInputNumberKeyPress}
+									readOnly
 								/>
 								<span className="text-danger">{formData.lote_error}</span>
 							</div>
@@ -693,7 +731,7 @@ export const OrdenCompraCreate = () => {
 							</div>
 							<div className="col-md-4">
 								<label htmlFor="containers" className="form-label">
-									Cantidad de contenedores
+									Tamano contenedores
 								</label>
 								<select id="containers" name="containers" className="form-select" ref={containersRef}>
 									<option value="">Seleccione</option>
@@ -807,6 +845,40 @@ export const OrdenCompraCreate = () => {
 					))}
 				</OrderDetailList>
 			</FormSection>
+			<PrintablePurchaseOrder
+				date={Date.now()}
+				supplier={lstProveedores.filter((x) => x.id.toString() === formData.proveedor.toString())[0]}
+				paymentType={lstTipoPago.filter((x) => x.codigo === formData.tipo_pago)[0]}
+				productionTime={formData.tiempo_produccion}
+				origin={lstPuertos.filter((x) => x.codigo === formData.puerto_origen)[0]}
+				destiny={lstPuertos.filter((x) => x.codigo === formData.puerto_destino)[0]}
+				ordenDetail={ordenDetail}
+				lstProducts={lstProductos}
+				details={formData.observaciones}
+			/>
+			{detailModal ? (
+				<Modal
+					title="Detalle orden de compra"
+					modal_size="modal-xl modal-dialog-scrollable"
+					onClose={handlerChangeDetailModal}
+				>
+					<PrintablePurchaseOrder
+						date={Date.now()}
+						orderNumber={formData.numero_importacion}
+						supplier={lstProveedores.filter((x) => x.id.toString() === formData.proveedor.toString())[0]}
+						paymentType={lstTipoPago.filter((x) => x.codigo === formData.tipo_pago)[0]}
+						productionTime={formData.tiempo_produccion}
+						origin={lstPuertos.filter((x) => x.codigo === formData.puerto_origen)[0]}
+						destiny={lstPuertos.filter((x) => x.codigo === formData.puerto_destino)[0]}
+						ordenDetail={ordenDetail}
+						lstProducts={lstProductos}
+						details={formData.observaciones}
+						display='block'
+					/>
+				</Modal>
+			) : (
+				<></>
+			)}
 		</Section>
 	);
 };

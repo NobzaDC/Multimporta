@@ -101,6 +101,7 @@ export const TIPO_IDENTIFICACION = [
 	{id: 'NP', nombre: 'Número de pasaporte'},
 	{id: 'PE', nombre: 'Permiso especial'},
 	{id: 'RC', nombre: 'Registro civil'},
+	{id: 'OT', nombre: 'Otro'},
 ]
 
 export const CANTIDAD_CONTENEDORES = [

@@ -9,7 +9,6 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as ProductoService from "services/V1/Producto/Index";
 import * as PresentacionProductoService from "services/V1/PresentacionProducto/Index";
-import { handlerInputNumberKeyPress } from "helpers/InputNumberKeyPress/Index";
 
 const DEFAULT_FORM_DATA = {
 	nombre: "",

@@ -46,7 +46,7 @@ export const ProductoIndex = () => {
 					return (ERROR_CASES[data?.response?.data?.error] || "Error al eliminar el producto.")
 				  }}
 			}
-		).then(x => {if(x === true)setProductos(last => last.filter(y => y.id !== code))})
+		).then(x => {if(x === true)setProductos(last => last.filter(y => y.codigo !== code))})
 	}
 
 	return (
@@ -67,8 +67,6 @@ export const ProductoIndex = () => {
 											<th>Codigo</th>
 											<th>Nombre</th>
 											<th>Presentación</th>
-											<th>Cantidad</th>
-											<th>Precio</th>
 											<th>Opciones</th>
 										</tr>
 									</thead>
@@ -79,10 +77,8 @@ export const ProductoIndex = () => {
 													<td>{x.codigo}</td>
 													<td>{x.nombre}</td>
 													<td>{x.presentacionNavigation?.nombre}</td>
-													<td>{x.cantidad}</td>
-													<td>{x.precio}</td>
 													<td>
-														<CrudListButtons edit_button_path={PRODUCTO_PATH.fncEdit(x.codigo)} delete_button_function={() => {handlerDeleteItem(x.id)}}/>
+														<CrudListButtons edit_button_path={PRODUCTO_PATH.fncEdit(x.codigo)} delete_button_function={() => {handlerDeleteItem(x.codigo)}}/>
 													</td>
 												</tr>
 											);
