@@ -441,7 +441,7 @@ export const OrdenCompraCreate = () => {
 					<div className="row mt-4">
 						<div className="col-md-4">
 							<label htmlFor="importationNumber" className="form-label">
-								Numero importación
+								Numero orden de compra
 							</label>
 							<input
 								id="importationNumber"

@@ -9,7 +9,6 @@ import { useParams, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as ProductoService from "services/V1/Producto/Index";
 import * as PresentacionProductoService from "services/V1/PresentacionProducto/Index";
-import { handlerInputNumberKeyPress } from "helpers/InputNumberKeyPress/Index";
 
 const DEFAULT_FORM_DATA = {
 	nombre: "",
@@ -26,26 +25,32 @@ const DEFAULT_FORM_DATA = {
 export const ProductoEdit = () => {
 	const [formData, setFormData] = React.useState(DEFAULT_FORM_DATA);
 	const [originalCode, setOriginalCode] = React.useState("");
-	const [presentacionesProducto, setPresentacionesProducto] = React.useState([])
+	const [presentacionesProducto, setPresentacionesProducto] = React.useState([]);
 
 	const { id } = useParams();
 	const history = useHistory();
 
 	React.useEffect(() => {
 		ProductoService.getById(id).then((x) => {
-			setFormData((last) => ({ ...last, id: x.id, nombre: x.nombre, cantidad: x.cantidad , precio: x.precio , presentacion: x.presentacion , observacion: x.observacion }));
-			setOriginalCode(x.id);
+			setFormData((last) => ({
+				...last,
+				codigo: x.codigo,
+				nombre: x.nombre,
+				presentacion: x.presentacion,
+				observacion: x.observacion,
+			}));
+			setOriginalCode(x.codigo);
 		});
-		PresentacionProductoService.getAll().then(setPresentacionesProducto)
+		PresentacionProductoService.getAll().then(setPresentacionesProducto);
 	}, [id]);
 
 	const handlerFormSubmit = (e) => {
 		e.preventDefault();
-		setFormData((last) => ({ ...last, id_error: "", nombre_error: "", presentacion_error: "", cantidad_error: "", precio_error: "", }));
+		setFormData((last) => ({ ...last, id_error: "", nombre_error: "", codigo_error: "", precio_error: "" }));
 
 		const { target } = e;
 
-		const { name, presentation, amount, price, details } = target;
+		const { code, name, presentation, details } = target;
 
 		let validationFlag = true;
 		let validationJson = {};
@@ -55,19 +60,9 @@ export const ProductoEdit = () => {
 			validationJson = { ...validationJson, nombre_error: REQUIRED_ERROR };
 		}
 
-		if (!presentation.value) {
+		if (!code.value) {
 			validationFlag = false;
-			validationJson = { ...validationJson, presentacion_error: REQUIRED_ERROR };
-		}
-
-		if (!amount.value) {
-			validationFlag = false;
-			validationJson = { ...validationJson, cantidad_error: REQUIRED_ERROR };
-		}
-
-		if (!price.value) {
-			validationFlag = false;
-			validationJson = { ...validationJson, precio_error: REQUIRED_ERROR };
+			validationJson = { ...validationJson, codigo_error: REQUIRED_ERROR };
 		}
 
 		if (!validationFlag) {
@@ -77,9 +72,8 @@ export const ProductoEdit = () => {
 		}
 
 		const json = {
+			Codigo: code.value,
 			Nombre: name.value,
-			Cantidad: amount.value,
-			Precio: price.value,
 			Presentacion: presentation.value,
 			Observacion: details.value,
 		};
@@ -90,9 +84,7 @@ export const ProductoEdit = () => {
 				success: "producto editado con exito.",
 				error: {
 					render({ data }) {
-						return (
-							ERROR_CASES[data?.response?.data?.error] || "Error al editar el producto."
-						);
+						return ERROR_CASES[data?.response?.data?.error] || "Error al editar el producto.";
 					},
 				},
 			})
@@ -111,7 +103,25 @@ export const ProductoEdit = () => {
 			/>
 			<Form submitButtonClass="btn-success" submitButtonName="Guardar" handlerSubmit={handlerFormSubmit}>
 				<div className="row mt-4">
-					<div className="col-md-6">
+					<div className="col-md-2">
+						<label htmlFor="name" className="form-label">
+							Codigo
+						</label>
+						<input
+							id="code"
+							name="code"
+							type="text"
+							autoComplete="off"
+							className="form-control"
+							placeholder="Codigo"
+							value={formData.codigo}
+							onChange={(e) =>
+								setFormData((last) => ({ ...last, codigo: e.target.value.substring(0, 5) }))
+							}
+						/>
+						<span className="text-danger">{formData.nombre_error}</span>
+					</div>
+					<div className="col-md-5">
 						<label htmlFor="name" className="form-label">
 							Nombre
 						</label>
@@ -128,7 +138,7 @@ export const ProductoEdit = () => {
 						/>
 						<span className="text-danger">{formData.nombre_error}</span>
 					</div>
-					<div className="col-md-6">
+					<div className="col-md-5">
 						<label htmlFor="presentation" className="form-label">
 							Presentación
 						</label>
@@ -139,7 +149,9 @@ export const ProductoEdit = () => {
 							value={formData.presentacion}
 							onChange={(e) => setFormData((last) => ({ ...last, presentacion: e.target.value }))}
 						>
-							<option value="">{presentacionesProducto.length >= 1 ? "Seleccione" : "Cargando..."}</option>
+							<option value="">
+								{presentacionesProducto.length >= 1 ? "Seleccione" : "Cargando..."}
+							</option>
 							{presentacionesProducto.map((x) => (
 								<option value={x.id} key={x.id}>
 									{x.nombre}
@@ -147,42 +159,6 @@ export const ProductoEdit = () => {
 							))}
 						</select>
 						<span className="text-danger">{formData.presentacion_error}</span>
-					</div>
-				</div>
-				<div className="row mt-4">
-					<div className="col-md-6">
-						<label htmlFor="amount" className="form-label">
-							Cantidad
-						</label>
-						<input
-							id="amount"
-							name="amount"
-							type="number"
-							autoComplete="off"
-							className="form-control"
-							placeholder="Cantidad"
-							onKeyPress={handlerInputNumberKeyPress}
-							value={formData.cantidad}
-							onChange={(e) => setFormData((last) => ({ ...last, cantidad: e.target.value }))}
-						/>
-						<span className="text-danger">{formData.cantidad_error}</span>
-					</div>
-					<div className="col-md-6">
-						<label htmlFor="price" className="form-label">
-							Precio
-						</label>
-						<input
-							id="price"
-							name="price"
-							type="number"
-							autoComplete="off"
-							className="form-control"
-							placeholder="Precio"
-							onKeyPress={handlerInputNumberKeyPress}
-							value={formData.precio}
-							onChange={(e) => setFormData((last) => ({ ...last, precio: e.target.value }))}
-						/>
-						<span className="text-danger">{formData.precio_error}</span>
 					</div>
 				</div>
 				<div className="row mt-4">

@@ -64,7 +64,7 @@ export const ProductoIndex = () => {
 								<table className="table table-dark table-striped table-responsive">
 									<thead>
 										<tr>
-											<th>Id</th>
+											<th>Codigo</th>
 											<th>Nombre</th>
 											<th>Presentación</th>
 											<th>Cantidad</th>
@@ -75,14 +75,14 @@ export const ProductoIndex = () => {
 									<tbody>
 										{productos.map((x) => {
 											return (
-												<tr key={x.id}>
-													<td>{x.id}</td>
+												<tr key={x.codigo}>
+													<td>{x.codigo}</td>
 													<td>{x.nombre}</td>
 													<td>{x.presentacionNavigation?.nombre}</td>
 													<td>{x.cantidad}</td>
 													<td>{x.precio}</td>
 													<td>
-														<CrudListButtons edit_button_path={PRODUCTO_PATH.fncEdit(x.id)} delete_button_function={() => {handlerDeleteItem(x.id)}}/>
+														<CrudListButtons edit_button_path={PRODUCTO_PATH.fncEdit(x.codigo)} delete_button_function={() => {handlerDeleteItem(x.id)}}/>
 													</td>
 												</tr>
 											);

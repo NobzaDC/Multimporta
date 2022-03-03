@@ -68,7 +68,7 @@ const Ul = styled.ul`
 
 	li {
 		width: 100%;
-		height: ${(props) => (props.isactive === ACTIVE ? "auto" : "50px")};
+		height: auto;
 		box-sizing: border-box;
 		font-weight: bold;
 		font-size: 1.3rem;
@@ -115,7 +115,7 @@ const SubMenu = styled.li`
 	flex-direction: column;
 	color: ${Color.WHITE};
 	transition: all 0.3s;
-	margin-left: ${props => props.isactive === ACTIVE ? '0' : '-200px'};
+	margin-left: ${(props) => (props.isactive === ACTIVE ? "0" : "-200px")};
 `;
 
 const SuMenuTitle = styled.div`
@@ -226,6 +226,10 @@ export const SideBarBody = ({ active }) => {
 	const handlerOnClickSubMenu = (name) => {
 		setSubMenu((last) => (last === name ? "none" : name));
 	};
+
+	React.useEffect(() => {
+		if (active !== ACTIVE) setSubMenu("none");
+	}, [active]);
 
 	return (
 		<StyledSideBarBody>

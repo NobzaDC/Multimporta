@@ -44,10 +44,10 @@ export const ProveedorCreate = () => {
 	const history = useHistory();
 
 	React.useEffect(() => {
-		CiudadService.getAll().then(setCiudades)
-		PaisService.getAll().then(setPaises)
-		PuertoService.getAll().then(setPuertos)
-	}, [])
+		CiudadService.getAll().then(setCiudades);
+		PaisService.getAll().then(setPaises);
+		PuertoService.getAll().then(setPuertos);
+	}, []);
 
 	const handlerFormSubmit = (e) => {
 		e.preventDefault();
@@ -131,8 +131,8 @@ export const ProveedorCreate = () => {
 	};
 
 	const handlerChangeNit = (e) => {
-		setFormData(last => ({...last, nit: e.target.value, numero_verificacion: getDigitoDian(e.target.value)}))
-	}
+		setFormData((last) => ({ ...last, nit: e.target.value, numero_verificacion: getDigitoDian(e.target.value) }));
+	};
 
 	return (
 		<Section>
@@ -163,7 +163,7 @@ export const ProveedorCreate = () => {
 					</div>
 					<div className="col-md-4">
 						<label htmlFor="referenceName" className="form-label">
-							Nombre referencia
+							Nombre empresa
 						</label>
 						<input
 							id="referenceName"
@@ -171,7 +171,7 @@ export const ProveedorCreate = () => {
 							type="text"
 							autoComplete="off"
 							className="form-control"
-							placeholder="Nombre referencia"
+							placeholder="Nombre empresa"
 							maxLength={150}
 							value={formData.nombre_referencia}
 							onChange={(e) => setFormData((last) => ({ ...last, nombre_referencia: e.target.value }))}
@@ -188,7 +188,7 @@ export const ProveedorCreate = () => {
 							value={formData.tipo_persona}
 							onChange={(e) => setFormData((last) => ({ ...last, tipo_persona: e.target.value }))}
 						>
-							<option  value="">Seleccione</option>
+							<option value="">Seleccione</option>
 							{TIPO_IDENTIFICACION.map((x) => (
 								<option value={x.id} key={x.id}>
 									{x.nombre}
@@ -303,110 +303,112 @@ export const ProveedorCreate = () => {
 						</select>
 					</div>
 				</div>
-				<div className="row mt-4">
-					<div className="col-md-4">
-						<label htmlFor="account" className="form-label">
-							Numero de cuenta
-						</label>
-						<input
-							id="account"
-							name="account"
-							type="number"
-							autoComplete="off"
-							className="form-control"
-							placeholder="Numero de cuenta"
-							onKeyPress={handlerInputNumberKeyPress}
-							value={formData.numero_cuenta}
-							onChange={(e) => setFormData((last) => ({ ...last, numero_cuenta: e.target.value }))}
-						/>
+				<div style={{ display: "none" }}>
+					<div className="row mt-4">
+						<div className="col-md-4">
+							<label htmlFor="account" className="form-label">
+								Numero de cuenta
+							</label>
+							<input
+								id="account"
+								name="account"
+								type="number"
+								autoComplete="off"
+								className="form-control"
+								placeholder="Numero de cuenta"
+								onKeyPress={handlerInputNumberKeyPress}
+								value={formData.numero_cuenta}
+								onChange={(e) => setFormData((last) => ({ ...last, numero_cuenta: e.target.value }))}
+							/>
+						</div>
+						<div className="col-md-4">
+							<label htmlFor="swift" className="form-label">
+								Codigo SWIFT
+							</label>
+							<input
+								id="swift"
+								name="swift"
+								type="text"
+								autoComplete="off"
+								className="form-control"
+								placeholder="Codigo SWIFT"
+								maxLength={11}
+								value={formData.codigo_swift}
+								onChange={(e) => setFormData((last) => ({ ...last, codigo_swift: e.target.value }))}
+							/>
+						</div>
+						<div className="col-md-4">
+							<label htmlFor="bankDirection" className="form-label">
+								Dirección del banco
+							</label>
+							<input
+								id="bankDirection"
+								name="bankDirection"
+								type="text"
+								autoComplete="off"
+								className="form-control"
+								placeholder="Dirección del banco"
+								maxLength={50}
+								value={formData.direccion_banco}
+								onChange={(e) => setFormData((last) => ({ ...last, direccion_banco: e.target.value }))}
+							/>
+						</div>
 					</div>
-					<div className="col-md-4">
-						<label htmlFor="swift" className="form-label">
-							Codigo SWIFT
-						</label>
-						<input
-							id="swift"
-							name="swift"
-							type="text"
-							autoComplete="off"
-							className="form-control"
-							placeholder="Codigo SWIFT"
-							maxLength={11}
-							value={formData.codigo_swift}
-							onChange={(e) => setFormData((last) => ({ ...last, codigo_swift: e.target.value }))}
-						/>
-					</div>
-					<div className="col-md-4">
-						<label htmlFor="bankDirection" className="form-label">
-							Dirección del banco
-						</label>
-						<input
-							id="bankDirection"
-							name="bankDirection"
-							type="text"
-							autoComplete="off"
-							className="form-control"
-							placeholder="Dirección del banco"
-							maxLength={50}
-							value={formData.direccion_banco}
-							onChange={(e) => setFormData((last) => ({ ...last, direccion_banco: e.target.value }))}
-						/>
-					</div>
-				</div>
-				<div className="row mt-4">
-					<div className="col-md-4">
-						<label htmlFor="bankCountry" className="form-label">
-							Pais del banco
-						</label>
-						<select
-							id="bankCountry"
-							name="bankCountry"
-							className="form-select"
-							value={formData.pais_banco}
-							onChange={(e) => setFormData((last) => ({ ...last, pais_banco: e.target.value }))}
-						>
-							<option  value="">Seleccione</option>
-							{paises.map((x) => (
-								<option value={x.codigo} key={x.codigo}>
-									{x.nombre}
-								</option>
-							))}
-						</select>
-					</div>
-					<div className="col-md-4">
-						<label htmlFor="bankCity" className="form-label">
-							Ciudad Banco
-						</label>
-						<select
-							id="bankCity"
-							name="bankCity"
-							className="form-select"
-							value={formData.ciudad_banco}
-							onChange={(e) => setFormData((last) => ({ ...last, ciudad_banco: e.target.value }))}
-						>
-							<option value="">Seleccione</option>
-							{ciudades.map((x) => (
-								<option value={x.codigo} key={x.codigo}>
-									{x.nombre}
-								</option>
-							))}
-						</select>
-					</div>
-					<div className="col-md-4">
-						<label htmlFor="ban" className="form-label">
-							Ban
-						</label>
-						<input
-							id="ban"
-							name="ban"
-							type="text"
-							autoComplete="off"
-							className="form-control"
-							placeholder="Ban"
-							maxLength={16}
-							value={formData.ban}
-							onChange={(e) => setFormData((last) => ({ ...last, ban: e.target.value }))}
-						/>
+					<div className="row mt-4">
+						<div className="col-md-4">
+							<label htmlFor="bankCountry" className="form-label">
+								Pais del banco
+							</label>
+							<select
+								id="bankCountry"
+								name="bankCountry"
+								className="form-select"
+								value={formData.pais_banco}
+								onChange={(e) => setFormData((last) => ({ ...last, pais_banco: e.target.value }))}
+							>
+								<option value="">Seleccione</option>
+								{paises.map((x) => (
+									<option value={x.codigo} key={x.codigo}>
+										{x.nombre}
+									</option>
+								))}
+							</select>
+						</div>
+						<div className="col-md-4">
+							<label htmlFor="bankCity" className="form-label">
+								Ciudad Banco
+							</label>
+							<select
+								id="bankCity"
+								name="bankCity"
+								className="form-select"
+								value={formData.ciudad_banco}
+								onChange={(e) => setFormData((last) => ({ ...last, ciudad_banco: e.target.value }))}
+							>
+								<option value="">Seleccione</option>
+								{ciudades.map((x) => (
+									<option value={x.codigo} key={x.codigo}>
+										{x.nombre}
+									</option>
+								))}
+							</select>
+						</div>
+						<div className="col-md-4">
+							<label htmlFor="ban" className="form-label">
+								Ban
+							</label>
+							<input
+								id="ban"
+								name="ban"
+								type="text"
+								autoComplete="off"
+								className="form-control"
+								placeholder="Ban"
+								maxLength={16}
+								value={formData.ban}
+								onChange={(e) => setFormData((last) => ({ ...last, ban: e.target.value }))}
+							/>
+						</div>
 					</div>
 				</div>
 			</Form>

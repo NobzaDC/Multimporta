@@ -14,10 +14,6 @@ import { handlerInputNumberKeyPress } from "helpers/InputNumberKeyPress/Index";
 const DEFAULT_FORM_DATA = {
 	nombre: "",
 	nombre_error: "",
-	cantidad: "",
-	cantidad_error: "",
-	precio: "",
-	precio_error: "",
 	presentacion: "",
 	presentacion_error: "",
 	observacion: "",
@@ -25,24 +21,29 @@ const DEFAULT_FORM_DATA = {
 
 export const ProductoCreate = () => {
 	const [formData, setFormData] = React.useState(DEFAULT_FORM_DATA);
-	const [presentacionesProducto, setPresentacionesProducto] = React.useState([])
-	
+	const [presentacionesProducto, setPresentacionesProducto] = React.useState([]);
+
 	React.useState(() => {
-		PresentacionProductoService.getAll().then(setPresentacionesProducto)
-	})
+		PresentacionProductoService.getAll().then(setPresentacionesProducto);
+	});
 
 	const history = useHistory();
 
 	const handlerFormSubmit = (e) => {
 		e.preventDefault();
-		setFormData((last) => ({ ...last, id_error: "", nombre_error: "", presentacion_error: "", cantidad_error: "", precio_error: "", }));
+		setFormData((last) => ({ ...last, id_error: "", nombre_error: "", codigo_error: "", precio_error: "" }));
 
 		const { target } = e;
 
-		const { name, presentation, amount, price, details } = target;
+		const { code, name, presentation, details } = target;
 
 		let validationFlag = true;
 		let validationJson = {};
+
+		if (!code.value) {
+			validationFlag = false;
+			validationJson = { ...validationJson, codigo_error: REQUIRED_ERROR };
+		}
 
 		if (!name.value) {
 			validationFlag = false;
@@ -54,16 +55,6 @@ export const ProductoCreate = () => {
 			validationJson = { ...validationJson, presentacion_error: REQUIRED_ERROR };
 		}
 
-		if (!amount.value) {
-			validationFlag = false;
-			validationJson = { ...validationJson, cantidad_error: REQUIRED_ERROR };
-		}
-
-		if (!price.value) {
-			validationFlag = false;
-			validationJson = { ...validationJson, precio_error: REQUIRED_ERROR };
-		}
-
 		if (!validationFlag) {
 			setFormData((last) => ({ ...last, ...validationJson }));
 			handlerCreateToast({ message: "Debe llenar todos los campos requeridos.", type: TOAST_TYPES.warning });
@@ -71,9 +62,8 @@ export const ProductoCreate = () => {
 		}
 
 		const json = {
+			Codigo: code.value,
 			Nombre: name.value,
-			Cantidad: amount.value,
-			Precio: price.value,
 			Presentacion: presentation.value,
 			Observacion: details.value,
 		};
@@ -95,10 +85,31 @@ export const ProductoCreate = () => {
 
 	return (
 		<Section>
-			<NavigationTitle name="Nuevo producto" path={getServerPath(PRODUCTO_PATH.index)} width_title='100%' width_children='0'/>
+			<NavigationTitle
+				name="Nuevo producto"
+				path={getServerPath(PRODUCTO_PATH.index)}
+				width_title="100%"
+				width_children="0"
+			/>
 			<Form submitButtonClass="btn-success" submitButtonName="Guardar" handlerSubmit={handlerFormSubmit}>
 				<div className="row mt-4">
-					<div className="col-md-6">
+					<div className="col-md-2">
+						<label htmlFor="name" className="form-label">
+							Codigo
+						</label>
+						<input
+							id="code"
+							name="code"
+							type="text"
+							autoComplete="off"
+							className="form-control"
+							placeholder="Codigo"
+							value={formData.codigo}
+							onChange={(e) => setFormData((last) => ({ ...last, codigo: e.target.value.substring(0, 5) }))}
+						/>
+						<span className="text-danger">{formData.nombre_error}</span>
+					</div>
+					<div className="col-md-5">
 						<label htmlFor="name" className="form-label">
 							Nombre
 						</label>
@@ -115,7 +126,7 @@ export const ProductoCreate = () => {
 						/>
 						<span className="text-danger">{formData.nombre_error}</span>
 					</div>
-					<div className="col-md-6">
+					<div className="col-md-5">
 						<label htmlFor="presentation" className="form-label">
 							Presentación
 						</label>
@@ -126,7 +137,9 @@ export const ProductoCreate = () => {
 							value={formData.presentacion}
 							onChange={(e) => setFormData((last) => ({ ...last, presentacion: e.target.value }))}
 						>
-							<option value="">{presentacionesProducto.length >= 1 ? "Seleccione" : "Cargando..."}</option>
+							<option value="">
+								{presentacionesProducto.length >= 1 ? "Seleccione" : "Cargando..."}
+							</option>
 							{presentacionesProducto.map((x) => (
 								<option value={x.id} key={x.id}>
 									{x.nombre}
@@ -134,42 +147,6 @@ export const ProductoCreate = () => {
 							))}
 						</select>
 						<span className="text-danger">{formData.presentacion_error}</span>
-					</div>
-				</div>
-				<div className="row mt-4">
-					<div className="col-md-6">
-						<label htmlFor="amount" className="form-label">
-							Cantidad
-						</label>
-						<input
-							id="amount"
-							name="amount"
-							type="number"
-							autoComplete="off"
-							className="form-control"
-							placeholder="Cantidad"
-							onKeyPress={handlerInputNumberKeyPress}
-							value={formData.cantidad}
-							onChange={(e) => setFormData((last) => ({ ...last, cantidad: e.target.value }))}
-						/>
-						<span className="text-danger">{formData.cantidad_error}</span>
-					</div>
-					<div className="col-md-6">
-						<label htmlFor="price" className="form-label">
-							Precio
-						</label>
-						<input
-							id="price"
-							name="price"
-							type="number"
-							autoComplete="off"
-							className="form-control"
-							placeholder="Precio"
-							onKeyPress={handlerInputNumberKeyPress}
-							value={formData.precio}
-							onChange={(e) => setFormData((last) => ({ ...last, precio: e.target.value }))}
-						/>
-						<span className="text-danger">{formData.precio_error}</span>
 					</div>
 				</div>
 				<div className="row mt-4">
